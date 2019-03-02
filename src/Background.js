@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import './Background.css';
 
+
 const api_key = "AIzaSyCjehMfVjXJHxGnb2CacNmVcp7EdRLj4Hc";
-const url_places = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1500&type=restaurant&keyword=cruise&key=" + api_key;
+const url_places = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" +
+    "radius=2000&type=restaurant&key=" + api_key + "&location=";
 const url_photos = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&key=" + api_key + "&photoreference=";
 
-console.log(navigator.geolocation)
 
 class Background extends Component {
     constructor(props) {
@@ -17,15 +18,14 @@ class Background extends Component {
     };
 
 
-    componentDidMount() {
-        fetch(url_places
+    display_places(position) {
+        fetch(url_places + position.coords.latitude + "," + position.coords.longitude
         ).then(results => {
             return results.json();
         }).then(data => {
             return data.results;
         }).then(results => {
             let pictures = results.map(place => {
-                console.log(place.photos[0].photo_reference)
                 return (
                     <div className="img" key={place.id}>
                         <p>{place.name}</p>
@@ -38,8 +38,15 @@ class Background extends Component {
                 )
             });
             this.setState({pictures: pictures});
-            console.log(this.state);
         });
+    }
+
+    componentWillMount() {
+        if (navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(position => {
+               this.display_places(position);
+            });
+        }
     }
 
     render() {
