@@ -1,0 +1,9 @@
+{
+  "host": "localhost",
+  "port": 4000,
+  "auth":{
+    "name": "auth",
+    "signUp": "sign-up",
+    "signIn": "sign-in"
+  }
+}

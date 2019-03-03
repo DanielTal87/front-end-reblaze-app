@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Background.css';
+import './css/Home.css';
 
 
 const api_key = "AIzaSyCjehMfVjXJHxGnb2CacNmVcp7EdRLj4Hc";
@@ -8,7 +8,7 @@ const url_places = "https://maps.googleapis.com/maps/api/place/nearbysearch/json
 const url_photos = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&key=" + api_key + "&photoreference=";
 
 
-class Background extends Component {
+class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -58,4 +58,4 @@ class Background extends Component {
     }
 }
 
-export default Background;
+export default Home;
