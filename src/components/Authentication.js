@@ -9,10 +9,6 @@ class Authentication extends Component {
         this.updatePasswordValue = this.updatePasswordValue.bind(this);
         this.signUp = this.signUp.bind(this);
         this.signIn = this.signIn.bind(this);
-        this.headers = {
-            'Accept': 'application/x-www-form-urlencoded;',
-            'Content-Type': 'application/json',
-        }
     };
 
 
@@ -27,11 +23,10 @@ class Authentication extends Component {
 
         fetch(url, {
             method: "POST",
-            headers: this.headers,
+            headers: config.headers,
             body: opts
             }
         ).then(results => {
-            console.log(results);
             return results.json();
         }).then(data => {
             if (data.code !== undefined) {

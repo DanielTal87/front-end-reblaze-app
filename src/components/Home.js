@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import './css/Home.css';
-
-
-const api_key = "AIzaSyCjehMfVjXJHxGnb2CacNmVcp7EdRLj4Hc";
-const url_places = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" +
-    "radius=2000&type=restaurant&key=" + api_key + "&location=";
-const url_photos = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&key=" + api_key + "&photoreference=";
+import config from '../config';
 
 
 class Home extends Component {
@@ -19,17 +14,26 @@ class Home extends Component {
 
 
     display_places(position) {
-        fetch(url_places + position.coords.latitude + "," + position.coords.longitude
+        const urlPlaces = "http://" + config.host + ":" + config.port + "/" + config.places.name;
+        const opts = JSON.stringify({
+            "latitude": position.coords.latitude,
+            "longitude": position.coords.longitude
+        });
+
+
+        fetch(urlPlaces, {
+                method: "POST",
+                headers: config.headers,
+                body: opts
+            }
         ).then(results => {
             return results.json();
         }).then(data => {
-            return data.results;
-        }).then(results => {
-            let pictures = results.map(place => {
+            let pictures = data.map(place => {
                 return (
                     <div className="img" key={place.id}>
                         <p>{place.name}</p>
-                        <img src={url_photos + place.photos[0].photo_reference} alt={place.name} height="300" width="300"/>
+                        <img src={place.photo_ref} alt={place.name} height="300" width="300"/>
                         <div align="center">
                             <button className="dislike">dislike</button>
                             <button className="like">like</button>
