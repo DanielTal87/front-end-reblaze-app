@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './css/Home.css';
+import Bar from './Bar';
 import config from '../config';
 
 
@@ -9,9 +10,44 @@ class Home extends Component {
         this.state = {
             pictures: [],
         }
+        /*this.judgement = this.judgement.bind(this);
+        this.like = this.like.bind(this);
+        this.dislike = this.dislike.bind(this);*/
 
     };
 
+    /*
+    judgement(url, id, name, photo_url) {
+        console.log(localStorage.getItem("uid"));
+        const opts = JSON.stringify({
+            "uid": localStorage.getItem("uid"),
+            "id": id,
+            "name": name,
+            "photo_url": photo_url
+        });
+
+        fetch(url, {
+            method: "POST",
+            headers: config.headers,
+            body: opts
+        }).then(results => {
+        }).catch(error => {
+            console.log(error);
+        })
+    }
+
+    like(id, name, photo_url) {
+        const urlLike = "http://" + config.host + ":" + config.port + "/" + config.places.name + "/" + config.places.like;
+        this.judgement(urlLike, id, name, photo_url);
+    }
+
+    dislike(id, name, photo_url) {
+        const urlDislike = "http://" + config.host + ":" +
+            config.port + "/" +
+            config.places.name + "/" +
+            config.places.dislike;
+        this.judgement(urlDislike, id, name, photo_url);
+    }*/
 
     display_places(position) {
         const urlPlaces = "http://" + config.host + ":" + config.port + "/" + config.places.name;
@@ -33,9 +69,9 @@ class Home extends Component {
                 return (
                     <div className="img" key={place.id}>
                         <p>{place.name}</p>
-                        <img src={place.photo_ref} alt={place.name} height="300" width="300"/>
+                        <img src={place.photo_url} alt={place.name} height="300" width="300"/>
                         <div align="center">
-                            <button className="dislike">dislike</button>
+                            <button className="dislike" >dislike</button>
                             <button className="like">like</button>
                         </div>
                     </div>
@@ -56,6 +92,7 @@ class Home extends Component {
     render() {
         return (
             <div>
+                <Bar />
                 {this.state.pictures}
             </div>
         )

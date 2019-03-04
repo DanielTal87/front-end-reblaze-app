@@ -32,11 +32,10 @@ class Authentication extends Component {
             if (data.code !== undefined) {
                 this.setState({error: data.message});
             } else {
+                localStorage.setItem("uid", data.user.uid);
                 this.setState({error: ""});
                 this.props.history.push("/home");
             }
-        }).catch(error => {
-            console.log(error)
         })
     }
 
